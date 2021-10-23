@@ -70,6 +70,25 @@ create table $tableRecipe (
     return null;
   }
 
+  Future<RecipeModel?> getRecipeByTitle(String title) async {
+    List<Map<String, dynamic>> maps = await db.query(tableRecipe,
+        columns: [
+          columnId,
+          columnCategory,
+          columnImage,
+          columnIngredents,
+          columnRate,
+          columnVideo,
+          columnTitle
+        ],
+        where: '$columnTitle = ?',
+        whereArgs: [title]);
+    if (maps.isNotEmpty) {
+      return RecipeModel.fromJson(maps.first);
+    }
+    return null;
+  }
+
   Future<int> delete(int id) async {
     return await db
         .delete(tableRecipe, where: '$columnId = ?', whereArgs: [id]);

@@ -40,12 +40,4 @@ class BookmarkController {
       print('Error: $error');
     }
   }
-
-  // drop() async {
-  //   try {
-  //     await bookmarkService.drop();
-  //   } catch (error) {
-  //     print(error);
-  //   }
-  // }
 }

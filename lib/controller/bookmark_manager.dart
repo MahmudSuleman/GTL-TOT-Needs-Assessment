@@ -16,7 +16,16 @@ class BookmarkManager {
     return _bookmarkService.insert(recipe);
   }
 
+  static Future<RecipeModel?> getRecipeByTitle(String title) async {
+    await _bookmarkService.open('recipe.db');
+    return _bookmarkService.getRecipeByTitle(title);
+  }
+
   static Future<int> deleteAll() async {
     return _bookmarkService.deleteAll();
+  }
+
+  static Future<int> delete(int? id) async {
+    return _bookmarkService.delete(id!);
   }
 }
