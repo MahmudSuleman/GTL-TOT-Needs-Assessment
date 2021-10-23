@@ -57,7 +57,45 @@ class _HomeViewState extends State<HomeView> {
         preferredSize: const Size.fromHeight(kToolbarHeight),
       ),
       drawer: const Drawer(),
-      body: ListView(
+      body: IndexedStack(
+        index: _currentIndex,
+        children: [
+          buildBody(),
+          BookmarkView(),
+          buildBody(),
+          buildBody(),
+        ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        currentIndex: _currentIndex,
+        onTap: (value) {
+          setState(() {
+            _currentIndex = value;
+          });
+        },
+        selectedItemColor: Colors.amber,
+        unselectedItemColor: Colors.grey,
+        showUnselectedLabels: false,
+        showSelectedLabels: false,
+        type: BottomNavigationBarType.fixed,
+        items: const [
+          BottomNavigationBarItem(
+              icon: Icon(Icons.home_outlined), label: 'Home'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.bookmark_border_outlined),
+            label: 'Favorite',
+          ),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.notifications_outlined), label: 'Notification'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.account_circle_outlined), label: 'Account')
+        ],
+      ),
+    );
+  }
+
+  buildBody() => ListView(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
         children: [
           RichText(
@@ -220,37 +258,5 @@ class _HomeViewState extends State<HomeView> {
                 );
               })
         ],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        currentIndex: _currentIndex,
-        onTap: (value) => setState(() {
-          _currentIndex = value;
-
-          if (_currentIndex == 1) {
-            Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-              return BookmarkView();
-            }));
-          }
-        }),
-        selectedItemColor: Colors.amber,
-        unselectedItemColor: Colors.grey,
-        showUnselectedLabels: false,
-        showSelectedLabels: false,
-        type: BottomNavigationBarType.fixed,
-        items: const [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined), label: 'Home'),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.bookmark_border_outlined),
-            label: 'Favorite',
-          ),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.notifications_outlined), label: 'Notification'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle_outlined), label: 'Account')
-        ],
-      ),
-    );
-  }
+      );
 }
